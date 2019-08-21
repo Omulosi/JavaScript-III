@@ -121,8 +121,34 @@ Baby.prototype.play = function() {
   Use your imagination and come up with constructors that allow to build objects
   With amazing and original capabilities. Build 3 small ones, or a very
   complicated one with lots of state. Surprise us!
-
 */
+
+function Account(holder) {
+  this.holder = holder;
+  this.balance = 0;
+  this.interest = 0.05;
+  this.withdrawalCharge = 5;
+
+  this.deposit = function(amt) {
+    this.balance += amt;
+    return this.balance;
+  }
+
+  this.withdraw = function(amt) {
+    let total = amt + this.withdrawalCharge;
+    if (total > self.balance) return `Insufficient funds`;
+    this.balance = this.balance - total;
+    return this.balance;
+  }
+
+  this.getBalance = function(){
+    return this.balance;
+  }
+
+  this.getHolder = function() {
+    return this.holder;
+  }
+}
 
 /*
 
