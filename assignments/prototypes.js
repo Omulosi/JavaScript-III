@@ -75,6 +75,29 @@ Person.prototype.poop = function() {
   - Give cars the ability to be repaired.
   - A repaired car can be driven again.
 
+*/
+
+function Car(model, make) {
+  this.model = model;
+  this.make = make;
+  this.isDrivable = true;
+  this.odometer = [];
+}
+
+Car.prototype.drive = function(distance) {
+  return (this.isDrivable? 
+    this.odometer.push(distance):
+    `I crashed at ${this.odometer[this.odometer.length - 1]} miles!`)
+}
+
+Car.prototype.crash = function() {
+  this.isDrivable = false;
+}
+
+Car.prototype.repair = function() {
+  this.isDrivable = true;
+}
+  /*
   TASK 3
 
   - Build a Baby constructor that subclasses the Person built earlier.
