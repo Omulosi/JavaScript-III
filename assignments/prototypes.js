@@ -49,10 +49,9 @@
 function Person(name, age) {
   this.name = name;
   this.age = age;
-  this.stomach = [];
 }
 
-
+Person.prototype.stomach = [];
 Person.prototype.greet = function() {
   return `${this.name} - ${this.age} years old.`;
 }
@@ -97,14 +96,26 @@ Car.prototype.crash = function() {
 Car.prototype.repair = function() {
   this.isDrivable = true;
 }
+
   /*
   TASK 3
 
   - Build a Baby constructor that subclasses the Person built earlier.
   - Babies of course inherit the ability to greet, which can be strange.
   - Babies should have the ability to play, which persons don't.
-  - By playing, a string is returned with some text of your choosing.
+  - By playing, a string is returned with some text of your choosing. */
 
+function Baby(name, age) {
+  this.name = name;
+  this.age = age;
+};
+
+Baby.prototype = Object.create(Person.prototype);
+Baby.prototype.play = function() {
+  return `Quack quack quack!!!`;
+}
+
+  /*
   TASK 4
 
   Use your imagination and come up with constructors that allow to build objects
