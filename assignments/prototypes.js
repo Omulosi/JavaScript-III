@@ -44,8 +44,26 @@
   - Give persons the ability to eat edibles.
   - When eating an edible, it should be pushed into a "stomach" property which is an array.
   - Give persons the ability to poop.
-  - When pooping, the stomach should empty.
+  - When pooping, the stomach should empty. */
 
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+Person.prototype.stomach = [];
+Person.prototype.greet = function() {
+  return `${this.name} - ${this.age} years old.`;
+}
+
+Person.prototype.eat = function(edible) {
+  this.stomach.push(edible);
+}
+
+Person.prototype.poop = function() {
+  this.stomach = [];
+}
+/*
   TASK 2
 
   - Build a Car constructor that takes model name and make.
@@ -56,20 +74,81 @@
   - Give cars the ability to be repaired.
   - A repaired car can be driven again.
 
+*/
+
+function Car(model, make) {
+  this.model = model;
+  this.make = make;
+  this.isDrivable = true;
+  this.odometer = [];
+}
+
+Car.prototype.drive = function(distance) {
+  return (this.isDrivable? 
+    this.odometer.push(distance):
+    `I crashed at ${this.odometer[this.odometer.length - 1]} miles!`)
+}
+
+Car.prototype.crash = function() {
+  this.isDrivable = false;
+}
+
+Car.prototype.repair = function() {
+  this.isDrivable = true;
+}
+
+  /*
   TASK 3
 
   - Build a Baby constructor that subclasses the Person built earlier.
   - Babies of course inherit the ability to greet, which can be strange.
   - Babies should have the ability to play, which persons don't.
-  - By playing, a string is returned with some text of your choosing.
+  - By playing, a string is returned with some text of your choosing. */
 
+function Baby(name, age) {
+  this.name = name;
+  this.age = age;
+};
+
+Baby.prototype = Object.create(Person.prototype);
+Baby.prototype.play = function() {
+  return `Quack quack quack!!!`;
+}
+
+  /*
   TASK 4
 
   Use your imagination and come up with constructors that allow to build objects
   With amazing and original capabilities. Build 3 small ones, or a very
   complicated one with lots of state. Surprise us!
-
 */
+
+function Account(holder) {
+  this.holder = holder;
+  this.balance = 0;
+  this.interest = 0.05;
+  this.withdrawalCharge = 5;
+
+  this.deposit = function(amt) {
+    this.balance += amt;
+    return this.balance;
+  }
+
+  this.withdraw = function(amt) {
+    let total = amt + this.withdrawalCharge;
+    if (total > self.balance) return `Insufficient funds`;
+    this.balance = this.balance - total;
+    return this.balance;
+  }
+
+  this.getBalance = function(){
+    return this.balance;
+  }
+
+  this.getHolder = function() {
+    return this.holder;
+  }
+}
 
 /*
 
@@ -89,7 +168,15 @@
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
+function GameObject(name, dimensions) {
+  this.name = name;
+  this.dimensions = dimensions;
+  this.createdAt = new Date();
+}
 
+GameObject.prototype.destroy = function() {
+  return `${this.name} was removed from the game.`
+}
 /*
   === CharacterStats ===
   * healthPoints
@@ -97,6 +184,14 @@
   * should inherit destroy() from GameObject's prototype
 */
 
+function CharacterStats(healthPoints) {
+  this.healthPoints = healthPoints;
+}
+
+CharacterStats.prototype = Object.create(GameObject.prototype);
+CharacterStats.prototype.takeDamage = function() {
+  return `<object name> took damage.`;
+}
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
   * team
@@ -107,6 +202,7 @@
   * should inherit takeDamage() from CharacterStats
 */
 
+function Humanoid(team, weapons, language){};
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
